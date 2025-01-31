@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "always"
+  },
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "editor.formatOnSaveMode": "modifications",
+  "vs-code-prettier-eslint.prettierLast": false
+}
