@@ -1,4 +1,4 @@
-import { addToCart, checkoutCart, getCart, getProducts, removeFromCart } from '@/api';
+import { addToCart, checkoutCart, clearCart, getCart, getProducts, removeFromCart } from '@/api';
 import { useEffect, useState } from 'react';
 
 const Test = () => {
@@ -49,13 +49,23 @@ const Test = () => {
     }
   };
 
+  // Handle clearing the cart
+  const handleClearCart = async () => {
+    try {
+      await clearCart();
+      const updatedCart = await getCart();
+      setCart(updatedCart);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   // Handle checkout
   const handleCheckout = async () => {
     try {
-      const { sessionId } = await checkoutCart();
-      console.log(sessionId);
-      // Redirect to Stripe Checkout
-      window.location.href = `https://checkout.stripe.com/pay/${sessionId}`;
+      const { url } = await checkoutCart();
+
+      window.location.href = url;
     } catch (error) {
       setError(error.message);
     }
@@ -142,7 +152,13 @@ const Test = () => {
       </div>
 
       {cart.length > 0 && (
-        <div className="mt-6">
+        <div className="mt-4 space-x-4">
+          <button
+            onClick={handleClearCart}
+            className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+          >
+            Clear Cart
+          </button>
           <button
             onClick={handleCheckout}
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"

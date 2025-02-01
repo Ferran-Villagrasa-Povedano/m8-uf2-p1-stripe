@@ -94,6 +94,11 @@ app.delete('/api/cart/:productId', async (req, res) => {
   res.status(200).json(removedProduct[0]);
 });
 
+app.delete('/api/cart', async (req, res) => {
+  cart = [];
+  res.status(200).json({ message: 'Cart cleared' });
+});
+
 app.get('/api/cart/checkout', async (req, res) => {
   if (cart.length === 0) {
     return res.status(400).json({ error: 'Cart is empty' });
@@ -113,9 +118,7 @@ app.get('/api/cart/checkout', async (req, res) => {
       cancel_url: `http://localhost:5173/cancel?session_id={CHECKOUT_SESSION_ID}`,
     });
 
-    cart = [];
-
-    res.status(200).json({ sessionId: session.id });
+    res.status(200).json({ url: session.url });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
