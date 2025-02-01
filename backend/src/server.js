@@ -10,7 +10,6 @@ app.use(express.json());
 
 let cart = [];
 
-
 app.get("/api/products", async (req, res) => {
   try {
     const products = await stripe.products.list({ limit: 100 });
@@ -46,8 +45,8 @@ app.get('/api/cart', async (req, res) => {
 });
 
 app.post('/api/cart', async (req, res) => {
-  const { productId, quantity = 1 } = req.body;
-
+  const { productId, quantity } = req.body;
+  console.log('Body', req.body);
   if (!productId) {
     return res.status(400).json({ error: 'Product ID is required' });
   }
@@ -60,7 +59,25 @@ app.post('/api/cart', async (req, res) => {
     const productInCart = cart.find((item) => item.productId === productId);
 
     if (productInCart) {
-      return res.status(400).json({ error: 'Product is already in the cart' });
+      // const updatedItem = {
+      //   productId: productInCart.productId,
+      //   priceId: productInCart.priceId,
+      //   name: productInCart.name,
+      //   description: productInCart.description,
+      //   image: productInCart.image,
+      //   price: productInCart.price,
+      //   priceId: productInCart.priceId,
+      //   quantity: productInCart.quantity + quantity,
+      // };
+
+      const productIndex = cart.findIndex((item) => item.productId === productId);
+
+      if (productIndex !== -1) {
+        cart[productIndex].quantity += quantity;
+        console.log('cart', cart);
+        return res.status(200).json(cart[productIndex]);
+      }
+      
     }
 
     const product = await stripe.products.retrieve(productId);
@@ -74,7 +91,7 @@ app.post('/api/cart', async (req, res) => {
       image: product.images[0],
       price: price ? price.unit_amount / 100 : null,
       priceId: price.id,
-      quantity,
+      quantity: 1,
     };
 
     cart.push(cartItem);
@@ -112,7 +129,7 @@ app.get('/api/cart/checkout', async (req, res) => {
   if (cart.length === 0) {
     return res.status(400).json({ error: 'Cart is empty' });
   }
-
+  
   try {
     const lineItems = cart.map((item) => ({
       price: item.priceId,

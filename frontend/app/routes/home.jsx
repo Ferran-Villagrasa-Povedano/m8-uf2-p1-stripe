@@ -3,17 +3,12 @@ import { useEffect, useState, useMemo } from 'react';
 import { getProducts, addToCart } from '@/api';
 import { checkoutCart, clearCart, getCart, removeFromCart } from '@/api';
 
-import NavBar from '../components/navBar';
-
 export function meta() {
   return [{ title: 'Home' }, { name: 'description', content: 'Home' }];
 }
 
 export default function Home() {
   const [products, setProducts] = useState([]);
-  const [category, setCategory] = useState(null);
-  const [error, setError] = useState(null);
-  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,22 +22,13 @@ export default function Home() {
     fetchData();
   });
 
-  const filteredProducts = useMemo(() => {
-    if (category) {
-      return products.filter(product => product.metadata.category === category);
-    }
-    return products;
-  }, [products, category]);
-
   // Handle adding a product to the cart
   const handleAddToCart = async productId => {
     try {
       await addToCart(productId);
-      const updatedCart = await getCart();
-      setCart(updatedCart);
       console.log('nuevoitem', productId);
     } catch (error) {
-      setError(error.message);
+      console.log(error);
     }
   };
 
@@ -53,7 +39,7 @@ export default function Home() {
         <br></br>
 
         <div className="flex flex-wrap justify-center gap-4">
-          {filteredProducts.map(product => (
+          {products.map(product => (
             <ProductCard
               key={product.id}
               id={product.id}
