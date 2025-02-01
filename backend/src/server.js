@@ -13,18 +13,27 @@ let cart = [];
 
 app.get("/api/products", async (req, res) => {
   try {
-    const products = await stripe.products.list();
+    const products = await stripe.products.list({ limit: 100 });
+    const prices = await stripe.prices.list({ limit: 100 });
+    
+    const priceMap = new Map();
+    prices.data.forEach(price => {
+      priceMap.set(price.id, price);
+    });
 
-    const productsWithPrices = await Promise.all(products.data.map(async (product) => {
-      const price = await stripe.prices.retrieve(product.default_price);
+    const productsWithPrices = products.data.map(product => {
+      const price = priceMap.get(product.default_price);
       return {
         id: product.id,
         name: product.name,
         description: product.description,
         image: product.images[0],
         price: price ? price.unit_amount / 100 : null,
+        priceId: price ? price.id : null,
+        inCart: cart.some((item) => item.productId === product.id),
+        metadata: product.metadata,
       };
-    }));
+    });
 
     res.json(productsWithPrices);
   } catch (error) {
@@ -114,8 +123,8 @@ app.get('/api/cart/checkout', async (req, res) => {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `http://localhost:5173/cancel?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.CLIENT_URL}/cancel?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     res.status(200).json({ url: session.url });

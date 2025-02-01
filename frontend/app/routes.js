@@ -7,4 +7,6 @@ export default [
   route('cancel', 'routes/cancel.jsx'),
   route('product/:productId', 'routes/product-details.jsx'),
   route('test', 'routes/test.jsx'),
+  route('contact', 'routes/contact.jsx'),
+  route('cart', 'routes/cart.jsx'),
 ];

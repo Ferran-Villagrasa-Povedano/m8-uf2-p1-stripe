@@ -6,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router';
+import NavBar from '@/components/navBar.jsx';
 
 import stylesheet from './app.css?url';
 
@@ -33,6 +34,7 @@ export function Layout({ children }) {
         <Links />
       </head>
       <body>
+        <NavBar />
         {children}
         <ScrollRestoration />
         <Scripts />
