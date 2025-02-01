@@ -132,21 +132,23 @@ const Test = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map(product => (
-              <tr key={product.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border-t">{product.name}</td>
-                <td className="px-4 py-2 border-t">{product.description}</td>
-                <td className="px-4 py-2 border-t">${product.price}</td>
-                <td className="px-4 py-2 border-t">
-                  <button
-                    onClick={() => handleAddToCart(product.id)}
-                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                  >
-                    Add to Cart
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {products
+              .filter(product => !cart.some(item => item.productId === product.id))
+              .map(product => (
+                <tr key={product.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-2 border-t">{product.name}</td>
+                  <td className="px-4 py-2 border-t">{product.description}</td>
+                  <td className="px-4 py-2 border-t">${product.price}</td>
+                  <td className="px-4 py-2 border-t">
+                    <button
+                      onClick={() => handleAddToCart(product.id)}
+                      className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                    >
+                      Add to Cart
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
