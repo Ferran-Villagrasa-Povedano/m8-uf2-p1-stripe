@@ -1,6 +1,12 @@
+import { checkoutCart, getCart, removeFromCart, updateProductCart } from '@/api';
+import removeShoppingCart from '@/assets/remove_shopping_cart.svg';
+import shoppingCartCheckout from '@/assets/shopping_cart_checkout.svg';
+
 import { useEffect, useState } from 'react';
-import { getCart, removeFromCart, checkoutCart, updateProductCart } from '@/api';
-import { FaTrashAlt } from 'react-icons/fa';
+
+export function meta() {
+  return [{ title: 'Carrito' }, { name: 'description', content: 'Carrito' }];
+}
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -54,7 +60,10 @@ const Cart = () => {
       <br />
       <div className="flex flex-col gap-4">
         {cart.map(item => (
-          <div className="flex flex-row border-2 rounded border-gray-200 p-2 justify-between items-center" key={item.productId}>
+          <div
+            className="flex flex-row border-2 rounded border-gray-200 p-2 justify-between items-center"
+            key={item.productId}
+          >
             <div className="flex flex-row gap-2">
               <div className="flex flex-row gap-2">
                 <div>
@@ -84,7 +93,7 @@ const Cart = () => {
               onClick={() => handleRemoveFromCart(item.productId)}
               className="bg-red-400  text-white w-15 h-15 mr-5 rounded-md hover:bg-red-600 flex items-center justify-center"
             >
-              <FaTrashAlt />
+              <img src={removeShoppingCart} alt="Remove from cart" className="w-4 h-4" />
             </button>
           </div>
         ))}
@@ -93,15 +102,16 @@ const Cart = () => {
       <div className="flex justify-between items-center">
         <h1 className="">Total:</h1>
         <p className="mr-10 font-bold">
-          {cart.reduce((acc, item) => acc + item.price * item.quantity, 0)}€
+          {cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}€
         </p>
       </div>
       <br />
       <div>
         <button
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 flex items-center justify-center"
           onClick={handleCheckout}
         >
+          <img src={shoppingCartCheckout} alt="Proceed to Checkout" className="w-4 h-4 mr-2" />
           Proceed to Checkout
         </button>
       </div>

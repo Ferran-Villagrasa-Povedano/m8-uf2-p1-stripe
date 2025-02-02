@@ -1,7 +1,6 @@
+import { addToCart, getProducts } from '@/api';
+import { useEffect, useState } from 'react';
 import ProductCard from '../components/productCard';
-import { useEffect, useState, useMemo } from 'react';
-import { getProducts, addToCart } from '@/api';
-import { checkoutCart, clearCart, getCart, removeFromCart } from '@/api';
 
 export function meta() {
   return [{ title: 'Home' }, { name: 'description', content: 'Home' }];

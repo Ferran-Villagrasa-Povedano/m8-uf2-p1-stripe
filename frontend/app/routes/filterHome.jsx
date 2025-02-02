@@ -1,6 +1,6 @@
-import ProductCard from '../components/productCard';
+import { addToCart, getProducts } from '@/api';
+import ProductCard from '@/components/productCard';
 import { useEffect, useState } from 'react';
-import { getProducts, addToCart } from '@/api';
 import { useSearchParams } from 'react-router';
 
 export function meta() {

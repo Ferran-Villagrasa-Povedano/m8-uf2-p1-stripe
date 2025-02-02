@@ -1,4 +1,8 @@
-import { FaPhoneAlt, FaEnvelope, FaInstagram } from 'react-icons/fa';
+import { FaEnvelope, FaInstagram, FaPhoneAlt } from 'react-icons/fa';
+
+export function meta() {
+  return [{ title: 'Contacto' }, { name: 'description', content: 'Contacto' }];
+}
 
 export default function Contact() {
   return (
@@ -21,14 +25,19 @@ export default function Contact() {
 
           <div className="flex items-center justify-center space-x-4">
             <FaInstagram className="text-2xl text-teal-600" />
-            <a href="https://www.instagram.com/componentesstore" className="text-lg text-teal-600 hover:text-teal-700">
+            <a
+              href="https://www.instagram.com/componentesstore"
+              className="text-lg text-teal-600 hover:text-teal-700"
+            >
               @componentesstore
             </a>
           </div>
         </div>
 
         <div className="mt-8">
-          <p className="text-sm text-gray-500">¡No dudes en ponerte en contacto con nosotros si tienes alguna pregunta!</p>
+          <p className="text-sm text-gray-500">
+            ¡No dudes en ponerte en contacto con nosotros si tienes alguna pregunta!
+          </p>
         </div>
       </div>
     </div>

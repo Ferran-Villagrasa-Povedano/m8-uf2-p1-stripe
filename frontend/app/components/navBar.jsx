@@ -1,10 +1,5 @@
+import shoppingCart from '@/assets/shopping_cart.svg';
 import { Link } from 'react-router';
-import { FaShoppingCart } from 'react-icons/fa';
-import { getCart } from '@/api';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'http://localhost:5173';
-
 const Navbar = () => {
   return (
     <nav className="bg-teal-800 p-3 fixed top-0 left-0 w-full z-50">
@@ -79,7 +74,7 @@ const Navbar = () => {
         </li>
         <li className="ml-auto">
           <Link to="/cart" className="text-white text-lg hover:text-gray-300 flex items-center">
-            <FaShoppingCart className="mr-4 w-6 h-6" />
+            <img src={shoppingCart} alt="Shopping cart" className="mr-4 w-6 h-6" />
           </Link>
         </li>
       </ul>

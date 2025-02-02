@@ -1,6 +1,10 @@
 import { IoIosCloseCircle } from 'react-icons/io';
 import { Link } from 'react-router';
 
+export function meta() {
+  return [{ title: 'Cancelado' }, { name: 'description', content: 'Cancelado' }];
+}
+
 export default function Cancel() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-6">
