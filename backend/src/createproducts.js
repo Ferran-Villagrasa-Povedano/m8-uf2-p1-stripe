@@ -453,7 +453,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const products = await stripe.products.list({limit: 100});
 products.data.forEach(async (product) => {
-    if (product.images.length === 0) {
+    if (product.id === 'prod_Rh88S9PlM9i759') {
         await stripe.products.delete(product.id);
     }
 })
+

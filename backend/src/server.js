@@ -12,8 +12,8 @@ let cart = [];
 
 app.get("/api/products", async (req, res) => {
   try {
-    const products = await stripe.products.list({ limit: 100 });
-    const prices = await stripe.prices.list({ limit: 100 });
+    const products = await stripe.products.list({ limit: 100, active: true });
+    const prices = await stripe.prices.list({ limit: 100, active: true });
     
     const priceMap = new Map();
     prices.data.forEach(price => {
