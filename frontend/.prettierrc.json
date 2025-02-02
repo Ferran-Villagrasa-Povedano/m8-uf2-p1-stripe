@@ -7,6 +7,5 @@
   "bracketSpacing": true,
   "jsxBracketSameLine": false,
   "jsxSingleQuote": false,
-  "arrowParens": "avoid",
-  "tailwindConfig": "./tailwind.config.js"
+  "arrowParens": "avoid"
 }

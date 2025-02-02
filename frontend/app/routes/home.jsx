@@ -1,13 +1,18 @@
 import { addToCart, getProducts } from '@/api';
+import ProductCard from '@/components/productCard';
 import { useEffect, useState } from 'react';
-import ProductCard from '../components/productCard';
+import { useSearchParams } from 'react-router';
 
 export function meta() {
   return [{ title: 'Home' }, { name: 'description', content: 'Home' }];
 }
 
-export default function Home() {
+export default function FilterHome() {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchParams] = useSearchParams();
+  const filter = searchParams.get('filter');
+  console.log('filter', toString(filter));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,11 +24,23 @@ export default function Home() {
       }
     };
     fetchData();
-  });
+  }, []);
+
+  useEffect(() => {
+    if (filter) {
+      const filtered = products.filter(product => product.metadata.category === filter);
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products);
+    }
+  }, [filter, products]);
 
   // Handle adding a product to the cart
   const handleAddToCart = async product => {
     try {
+      setProducts(
+        products.map(item => (item.id === product.id ? { ...item, inCart: true } : item))
+      );
       await addToCart(product.id, 1);
       console.log('nuevoitem', product.id);
     } catch (error) {
@@ -38,7 +55,7 @@ export default function Home() {
         <br></br>
 
         <div className="flex flex-wrap justify-center mt-8 gap-4">
-          {products.map(product => (
+          {filteredProducts.map(product => (
             <ProductCard
               key={product.id}
               id={product.id}

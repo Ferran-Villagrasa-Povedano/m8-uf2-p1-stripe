@@ -1,4 +1,4 @@
-import { checkoutCart, getCart, removeFromCart, updateProductCart } from '@/api';
+import { checkoutCart, clearCart, getCart, removeFromCart, updateProductCart } from '@/api';
 import removeShoppingCart from '@/assets/remove_shopping_cart.svg';
 import shoppingCartCheckout from '@/assets/shopping_cart_checkout.svg';
 
@@ -42,6 +42,16 @@ const Cart = () => {
 
     setCart(updatedCart);
     updateProductCart(productId, quantity);
+  };
+
+  const handleClearCart = async () => {
+    try {
+      await clearCart();
+      const updatedCart = await getCart();
+      setCart(updatedCart);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCheckout = async () => {
@@ -99,14 +109,20 @@ const Cart = () => {
         ))}
       </div>
       <br />
-      <div className="flex justify-between items-center">
+      <div className="flex  items-center justify-end">
         <h1 className="">Total:</h1>
-        <p className="mr-10 font-bold">
+        <p className="ml-10 font-bold">
           {cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}€
         </p>
       </div>
       <br />
-      <div>
+      <div className="flex justify-between">
+        <button
+          onClick={handleClearCart}
+          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+        >
+          Clear Cart
+        </button>
         <button
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 flex items-center justify-center"
           onClick={handleCheckout}

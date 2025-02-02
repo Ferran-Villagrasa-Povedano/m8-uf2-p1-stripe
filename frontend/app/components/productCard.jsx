@@ -13,7 +13,7 @@ export default function ProductCard({
   inCart,
 }) {
   return (
-    <div className="flex flex-col items-center justify-between p-4 bg-light-gray rounded-sm shadow-md w-50 h-70 border border-gray-200 relative">
+    <div className="flex flex-col items-center justify-between p-4 bg-light-gray rounded-sm shadow-md w-50 h-70 border border-gray-200 relative hover:shadow-2xl transition-shadow duration-300">
       <Link to={`/product/${id}`}>
         <div className="flex justify-center w-full">
           <img className="w-[70%] rounded-sm self" src={image} alt={name} />

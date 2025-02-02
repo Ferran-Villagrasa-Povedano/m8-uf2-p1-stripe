@@ -23,40 +23,31 @@ const Navbar = () => {
           <button className="text-white text-lg hover:text-gray-300">Componentes ▼</button>
           <ul className="absolute left-0 mt-2 w-48 bg-teal-700 shadow-lg rounded-lg opacity-0 group-hover:opacity-100 group-hover:visible invisible transition-opacity duration-200 group-focus-within:opacity-100 group-focus-within:visible z-50">
             <li>
-              <Link
-                to={`/filterHome?filter=cpu`}
-                className="block px-4 py-2 text-white hover:bg-teal-600"
-              >
+              <Link to={`/?filter=cpu`} className="block px-4 py-2 text-white hover:bg-teal-600">
                 CPU
               </Link>
             </li>
             <li>
-              <Link
-                to={`/filterHome?filter=ram`}
-                className="block px-4 py-2 text-white hover:bg-teal-600"
-              >
+              <Link to={`/?filter=ram`} className="block px-4 py-2 text-white hover:bg-teal-600">
                 RAM
               </Link>
             </li>
             <li>
               <Link
-                to={`/filterHome?filter=motherboard`}
+                to={`/?filter=motherboard`}
                 className="block px-4 py-2 text-white hover:bg-teal-600"
               >
                 Placa Base
               </Link>
             </li>
             <li>
-              <Link
-                to={`/filterHome?filter=case`}
-                className="block px-4 py-2 text-white hover:bg-teal-600"
-              >
+              <Link to={`/?filter=case`} className="block px-4 py-2 text-white hover:bg-teal-600">
                 Caja
               </Link>
             </li>
             <li>
               <Link
-                to={`/filterHome?filter=powersupply`}
+                to={`/?filter=powersupply`}
                 className="block px-4 py-2 text-white hover:bg-teal-600"
               >
                 Fuente de Alimentación
@@ -65,10 +56,7 @@ const Navbar = () => {
           </ul>
         </li>
         <li>
-          <Link
-            to={`/filterHome?filter=peripherics`}
-            className="text-white text-lg hover:text-gray-300"
-          >
+          <Link to={`/?filter=peripherics`} className="text-white text-lg hover:text-gray-300">
             Perifericos
           </Link>
         </li>
