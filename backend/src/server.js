@@ -14,7 +14,7 @@ app.get("/api/products", async (req, res) => {
   try {
     const products = await stripe.products.list({ limit: 100, active: true });
     const prices = await stripe.prices.list({ limit: 100, active: true });
-    
+
     const priceMap = new Map();
     prices.data.forEach(price => {
       priceMap.set(price.id, price);
@@ -39,6 +39,37 @@ app.get("/api/products", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+app.get('/api/products/:productId', async (req, res) => {
+  const { productId } = req.params;
+
+  if (!productId) {
+    return res.status(400).json({ error: 'Product ID is required' });
+  }
+
+  const product = await stripe.products.retrieve(productId);
+
+  if (!product) {
+    return res.status(404).json({ error: 'Product not found' });
+  }
+
+  const price = await stripe.prices.retrieve(product.default_price);
+
+  res.json(
+    {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      image: product.images[0],
+      price: price ? price.unit_amount / 100 : null,
+      priceId: price ? price.id : null,
+      inCart: cart.some((item) => item.productId === product.id),
+      metadata: product.metadata,
+    }
+  );
+});
+
+
 
 app.get('/api/cart', async (req, res) => {
   res.json(cart);
@@ -77,7 +108,7 @@ app.post('/api/cart', async (req, res) => {
         console.log('cart', cart);
         return res.status(200).json(cart[productIndex]);
       }
-      
+
     }
 
     const product = await stripe.products.retrieve(productId);
@@ -124,7 +155,7 @@ app.post('/api/cart/update', async (req, res) => {
         console.log('cart', cart);
         return res.status(200).json(cart[productIndex]);
       }
-      
+
     }
 
     const product = await stripe.products.retrieve(productId);
@@ -175,7 +206,7 @@ app.get('/api/cart/checkout', async (req, res) => {
   if (cart.length === 0) {
     return res.status(400).json({ error: 'Cart is empty' });
   }
-  
+
   try {
     const lineItems = cart.map((item) => ({
       price: item.priceId,

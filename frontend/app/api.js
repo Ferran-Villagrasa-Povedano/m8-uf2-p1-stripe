@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = axios.create({
+const axiosClient = axios.create({
   baseURL: '/api',
   headers: {
     'Content-Type': 'application/json',
@@ -9,7 +9,7 @@ const api = axios.create({
 
 export const getProducts = async () => {
   try {
-    const response = await api.get('/products');
+    const response = await axiosClient.get('/products');
     return response.data;
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -17,9 +17,19 @@ export const getProducts = async () => {
   }
 };
 
+export const getProduct = async id => {
+  try {
+    const response = await axiosClient.get('/products/' + id);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    throw error;
+  }
+};
+
 export const getCart = async () => {
   try {
-    const response = await api.get('/cart');
+    const response = await axiosClient.get('/cart');
     return response.data;
   } catch (error) {
     console.error('Error fetching cart:', error);
@@ -29,7 +39,7 @@ export const getCart = async () => {
 
 export const addToCart = async (productId, quantity) => {
   try {
-    const response = await api.post('/cart', { productId, quantity: parseInt(quantity) });
+    const response = await axiosClient.post('/cart', { productId, quantity: parseInt(quantity) });
     return response.data;
   } catch (error) {
     console.error('Error adding to cart:', error);
@@ -39,7 +49,10 @@ export const addToCart = async (productId, quantity) => {
 
 export const updateProductCart = async (productId, quantity) => {
   try {
-    const response = await api.post('/cart/update', { productId, quantity: parseInt(quantity) });
+    const response = await axiosClient.post('/cart/update', {
+      productId,
+      quantity: parseInt(quantity),
+    });
     return response.data;
   } catch (error) {
     console.error('Error adding to cart:', error);
@@ -49,7 +62,7 @@ export const updateProductCart = async (productId, quantity) => {
 
 export const removeFromCart = async productId => {
   try {
-    const response = await api.delete(`/cart/${productId}`);
+    const response = await axiosClient.delete(`/cart/${productId}`);
     return response.data;
   } catch (error) {
     console.error('Error removing from cart:', error);
@@ -59,7 +72,7 @@ export const removeFromCart = async productId => {
 
 export const clearCart = async () => {
   try {
-    const response = await api.delete('/cart');
+    const response = await axiosClient.delete('/cart');
     return response.data;
   } catch (error) {
     console.error('Error clearing cart:', error);
@@ -69,7 +82,7 @@ export const clearCart = async () => {
 
 export const checkoutCart = async () => {
   try {
-    const response = await api.get('/cart/checkout');
+    const response = await axiosClient.get('/cart/checkout');
     return response.data;
   } catch (error) {
     console.error('Error during checkout:', error);
