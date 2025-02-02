@@ -90,7 +90,6 @@ app.post('/api/cart', async (req, res) => {
       description: product.description,
       image: product.images[0],
       price: price ? price.unit_amount / 100 : null,
-      priceId: price.id,
       quantity: 1,
     };
 
@@ -138,7 +137,6 @@ app.post('/api/cart/update', async (req, res) => {
       description: product.description,
       image: product.images[0],
       price: price ? price.unit_amount / 100 : null,
-      priceId: price.id,
       quantity: 1,
     };
 
