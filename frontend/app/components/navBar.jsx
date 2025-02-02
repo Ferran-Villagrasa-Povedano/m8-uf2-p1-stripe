@@ -2,7 +2,7 @@ import shoppingCart from '@/assets/shopping_cart.svg';
 import { Link } from 'react-router';
 const Navbar = () => {
   return (
-    <nav className="bg-teal-800 p-3 fixed top-0 left-0 w-full z-50">
+    <nav className="bg-teal-800 p-3 fixed top-0 left-0 w-full z-50 shadow-lg md:px-25">
       <ul className="flex space-x-6 relative">
         <li>
           <Link to="/" className="text-white text-lg hover:text-gray-300">

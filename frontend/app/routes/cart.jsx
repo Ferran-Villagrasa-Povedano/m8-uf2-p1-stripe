@@ -95,7 +95,7 @@ const Cart = () => {
                       ))}
                     </select>
                   </div>
-                  <p>{item.price * item.quantity} €</p>
+                  <p>{(item.price * item.quantity).toFixed(2)} €</p>
                 </div>
               </div>
             </div>
