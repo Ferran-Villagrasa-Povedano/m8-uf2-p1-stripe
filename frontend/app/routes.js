@@ -9,4 +9,6 @@ export default [
   route('test', 'routes/test.jsx'),
   route('contact', 'routes/contact.jsx'),
   route('cart', 'routes/cart.jsx'),
+  route('about', 'routes/about.jsx'),
+  route('filterHome', 'routes/filterHome.jsx'),
 ];

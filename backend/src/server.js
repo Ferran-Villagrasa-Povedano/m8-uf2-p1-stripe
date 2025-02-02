@@ -102,6 +102,54 @@ app.post('/api/cart', async (req, res) => {
   }
 });
 
+app.post('/api/cart/update', async (req, res) => {
+  const { productId, quantity } = req.body;
+  console.log('Body', req.body);
+  if (!productId) {
+    return res.status(400).json({ error: 'Product ID is required' });
+  }
+
+  if (quantity < 1) {
+    return res.status(400).json({ error: 'Quantity must be at least 1' });
+  }
+
+  try {
+    const productInCart = cart.find((item) => item.productId === productId);
+
+    if (productInCart) {
+
+      const productIndex = cart.findIndex((item) => item.productId === productId);
+
+      if (productIndex !== -1) {
+        cart[productIndex].quantity = quantity;
+        console.log('cart', cart);
+        return res.status(200).json(cart[productIndex]);
+      }
+      
+    }
+
+    const product = await stripe.products.retrieve(productId);
+    const price = await stripe.prices.retrieve(product.default_price);
+
+    const cartItem = {
+      productId: product.id,
+      priceId: price.id,
+      name: product.name,
+      description: product.description,
+      image: product.images[0],
+      price: price ? price.unit_amount / 100 : null,
+      priceId: price.id,
+      quantity: 1,
+    };
+
+    cart.push(cartItem);
+
+    res.status(201).json(cartItem);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.delete('/api/cart/:productId', async (req, res) => {
   const { productId } = req.params;
 

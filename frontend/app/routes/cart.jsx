@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getCart, removeFromCart, checkoutCart } from '@/api';
+import { getCart, removeFromCart, checkoutCart, updateProductCart } from '@/api';
 import { FaTrashAlt } from 'react-icons/fa';
 
 const Cart = () => {
@@ -35,6 +35,7 @@ const Cart = () => {
     console.log('updatreCarro', updatedCart);
 
     setCart(updatedCart);
+    updateProductCart(productId, quantity);
   };
 
   const handleCheckout = async () => {
@@ -91,7 +92,9 @@ const Cart = () => {
       <br />
       <div className="flex justify-between items-center">
         <h1 className="">Total:</h1>
-        <p className="mr-10 font-bold">{cart.reduce((acc, item) => acc + item.price * item.quantity, 0)} €</p>
+        <p className="mr-10 font-bold">
+          {cart.reduce((acc, item) => acc + item.price * item.quantity, 0)}€
+        </p>
       </div>
       <br />
       <div>

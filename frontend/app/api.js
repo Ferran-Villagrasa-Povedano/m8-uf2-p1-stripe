@@ -27,9 +27,19 @@ export const getCart = async () => {
   }
 };
 
-export const addToCart = async (productId, quantity = 1) => {
+export const addToCart = async (productId, quantity) => {
   try {
-    const response = await api.post('/cart', { productId, quantity });
+    const response = await api.post('/cart', { productId, quantity: parseInt(quantity) });
+    return response.data;
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+    throw error;
+  }
+};
+
+export const updateProductCart = async (productId, quantity) => {
+  try {
+    const response = await api.post('/cart/update', { productId, quantity: parseInt(quantity) });
     return response.data;
   } catch (error) {
     console.error('Error adding to cart:', error);
