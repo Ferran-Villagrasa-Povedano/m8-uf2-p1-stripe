@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
 export function meta() {
-  return [{ title: 'Home' }, { name: 'description', content: 'Home' }];
+  return [{ title: 'ComponentesTech' }, { name: 'description', content: 'ComponentesTech' }];
 }
 
 export default function FilterHome() {
